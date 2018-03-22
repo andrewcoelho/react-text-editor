@@ -6,7 +6,8 @@ const BLOCK_TYPES = [
   { label: 'H2', style: 'header-two' },
   { icon: 'a-unordered-list', style: 'unordered-list-item' },
   { icon: 'a-ordered-list', style: 'ordered-list-item' },
-  { icon: 'a-quote', style: 'blockquote' }
+  { icon: 'a-quote', style: 'blockquote' },
+  { icon: 'a-code', style: 'code-block' }
 ];
 
 const SideToolbarExtras = ({ editorState, onToggle }) => {

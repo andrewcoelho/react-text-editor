@@ -15,6 +15,9 @@ body {
 *::after {
   box-sizing: inherit;
 }
+pre {
+  margin: 0;
+}
 @font-face {
     font-family: 'alkren';
     src:
@@ -61,6 +64,9 @@ i {
 .a-menu:before {
     content: "\e8fe";
 }
+.a-code:before {
+    content: "\e86f";
+}
 .editor {
   position: absolute;
   top: 0;
@@ -80,6 +86,10 @@ i {
   padding-left: 21px;
   border-left: 3px solid #444;
 }
+.editor .public-DraftStyleDefault-pre {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
 .editor img {
   max-width: 100%;
 }
@@ -91,7 +101,7 @@ i {
 }
 .toolbar.side {
   top: -32px;
-  left: -48px;
+  left: -65px;
 }
 .toolbar.image {
   top: 7px;
