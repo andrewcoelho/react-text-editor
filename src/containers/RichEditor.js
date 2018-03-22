@@ -1,11 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
   Editor,
   EditorState,
   Entity,
   RichUtils,
-  ContentState,
-  CompositeDecorator,
   AtomicBlockUtils
 } from 'draft-js';
 import {
@@ -26,6 +24,8 @@ class RichEditor extends Component {
       inlineToolbar: { show: false }
     };
 
+    this.placeholder = 'Write something...';
+
     this.onChange = (editorState) => {
       if (!editorState.getSelection().isCollapsed()) {
         const selectionRange = getSelectionRange();
@@ -45,7 +45,7 @@ class RichEditor extends Component {
 
       this.setState({ editorState });
       setTimeout(this.updateSelection, 0);
-    }
+    };
     this.focus = () => this.refs.editor.focus();
     this.updateSelection = () => this._updateSelection();
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
@@ -55,13 +55,20 @@ class RichEditor extends Component {
     this.toggleInlineStyle = (style) => this._toggleInlineStyle(style);
     this.insertImage = (file) => this._insertImage(file);
     this.blockRenderer = (block) => {
+      const hasText = this.state.editorState.getCurrentContent().hasText();
+      if (!hasText && block.getType() !== 'unstyled') {
+        this.placeholder = '';
+      } else {
+        this.placeholder = 'Write something...';
+      }
+
       if (block.getType() === 'atomic') {
         return {
           component: ImageComponent
         };
       }
       return null;
-    }
+    };
     this.blockStyler = (block) => {
       if (block.getType() === 'unstyled') {
         return 'paragraph';
@@ -130,7 +137,7 @@ class RichEditor extends Component {
   }
 
   render() {
-    const { editorState, selectedBlock, selectionRange } = this.state;
+    const { editorState, selectedBlock } = this.state;
     let sideToolbarOffsetTop = 0;
 
     if (selectedBlock) {
@@ -167,7 +174,7 @@ class RichEditor extends Component {
           editorState={editorState}
           handleKeyCommand={this.handleKeyCommand}
           onChange={this.onChange}
-          placeholder="Write something..."
+          placeholder={this.placeholder}
           spellCheck={true}
           readOnly={this.state.editingImage}
           ref="editor"
